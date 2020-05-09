@@ -21,7 +21,7 @@ router.post('/signup',
                     console.log("4");
                     var msg = constant.VERIFICATION_MAIL + req.body.otp + "." + constant.EMAIL_SIGNATURE;
                     my.sendmail(req.body.email_id, constant.REG_SUB, msg);
-                    let newData = await services.userSignup(payLoad);
+                    let newData = await services.userSignup();
                     console.log("5");
                     if (newData) {
                         console.log("6");
