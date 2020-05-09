@@ -8,6 +8,8 @@ var base_url = "http://172.105.54.245/admin/";
 var request = require('request');
 var msg91 = require("msg91")("205521Ay0uGpRMiR5da996d7", "KEYIND", "4");
 var crypto = require('crypto');
+var cm = require("../model/comman_model");
+var my = require("../model/mymodel");
 console.log("#1");
 const userSignup = async(req, res) => {
     try {
