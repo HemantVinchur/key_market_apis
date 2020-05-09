@@ -1,6 +1,6 @@
 var con = require('../config/connect');
 var fcm = require('fcm-notification');
-var FCM = new fcm('../privatekey.json');
+var FCM = new fcm('./privatekey.json');
 var utf8 = require('utf8');
 var cdn_base_url = "https://d24omluomygbgb.cloudfront.net/thumbnails/";
 

@@ -9,7 +9,7 @@ var request = require('request');
 var msg91 = require("msg91")("205521Ay0uGpRMiR5da996d7", "KEYIND", "4");
 var crypto = require('crypto');
 console.log("#1");
-const userSignup = async() => {
+const userSignup = async(req, res) => {
     try {
         console.log("#2");
         var current_date = (new Date()).valueOf().toString();
