@@ -8,14 +8,16 @@ var base_url = "http://172.105.54.245/admin/";
 var request = require('request');
 var msg91 = require("msg91")("205521Ay0uGpRMiR5da996d7", "KEYIND", "4");
 
-
+console.log("#1");
 const userSignup = async() => {
     try {
+        console.log("#2");
         var current_date = (new Date()).valueOf().toString();
         var random = Math.random().toString(16);
         var str = crypto.createHash('sha1').update(random + current_date).digest('hex');
         var pub_id = str;
         if (req.body.email_id) {
+            console.log("#3");
             var email_id = req.body.email_id;
             var current_date = (new Date()).valueOf().toString();
             var username = email_id.split('@');
@@ -24,20 +26,23 @@ const userSignup = async() => {
                 email_id: req.body.email_id
             }, function(err, result) {
                 if (err) {
-
+                    console.log("#4");
                 } else {
+                    console.log("#5");
                     if (result.length == 0) {
+                        console.log("#6");
                         var code = qr.image(pub_id, {
                             type: 'png',
                             ec_level: 'H',
                             size: 10,
                             margin: 0
                         });
+                        console.log("#7");
                         var ss = path.join('../../../../../var/www/html/admin/assets/barcode_image/', pub_id + '.png');
                         var output = fs.createWriteStream(ss);
                         code.pipe(output);
                         var qr_image = "/assets/barcode_image/" + pub_id + ".png"
-
+                        console.log("#8");
                         var userdata = {
                             pub_id: pub_id,
                             email_id: req.body.email_id,
@@ -68,7 +73,9 @@ const userSignup = async() => {
                                 });
                             });
                         });
+                        console.log("#9");
                     } else {
+                        console.log("#10");
                         cm.getallDataWhere('user', {
                             email_id: req.body.email_id
                         }, function(err, userData) {
@@ -95,8 +102,9 @@ const userSignup = async() => {
                                         QR_image: qr_image,
                                     }, function(err, updateresult) {});
                                 }
-
+                                console.log("#11");
                                 if (userData[0].user_name == "") {
+                                    console.log("#12");
                                     userData[0].user_name = user_name;
                                     cm.update('user', {
                                         email_id: req.body.email_id
@@ -104,7 +112,7 @@ const userSignup = async() => {
                                         user_name: user_name,
                                     }, function(err, updateresult) {});
                                 }
-
+                                console.log("#13");
                                 cm.update('user', {
                                     email_id: req.body.email_id
                                 }, {
@@ -112,7 +120,7 @@ const userSignup = async() => {
                                     device_type: req.body.device_type,
                                 }, function(err, updateresult) {});
                             }
-
+                            console.log("#14");
                             res.send({
                                 "status": 1,
                                 "message": constant.USER_REGISTER,
@@ -123,19 +131,23 @@ const userSignup = async() => {
                 }
             });
         }
-
+        console.log("#15");
         if (req.body.mobile_number) {
+            console.log("#16");
             if (req.body.country_code == "91") {
+                console.log("#17");
                 var senderId = "KEYIND";
             } else {
+                console.log("#18");
                 var senderId = "KEYMARKTOTP";
             }
-
+            console.log("#19");
             var msg = "Use " + req.body.otp + constant.VERIFICATION_MSG;
             var number = req.body.country_code + req.body.mobile_number;
             var user_name = req.body.country_code + req.body.mobile_number + 'KMUser';
-
+            console.log("#20");
             if (req.body.country_code == "91") {
+                console.log("#21");
                 msg91.send(number, msg, function(err, response) {
                     //console.log(response);
                 });
@@ -157,8 +169,9 @@ const userSignup = async() => {
                 mobile_number: req.body.mobile_number,
                 country_code: req.body.country_code
             }, function(err, userResult) {
+                console.log("#22");
                 if (userResult.length == 0) {
-
+                    console.log("#23");
                     var code = qr.image(pub_id, {
                         type: 'png',
                         ec_level: 'H',
@@ -265,5 +278,5 @@ const userSignup = async() => {
         throw error
     }
 }
-
+console.log("#24");
 module.exports = { userSignup }
