@@ -57,6 +57,14 @@ router.post('/signup',
         }
     })
 
+function errorLog(res, status, err) {
+    res.send({
+        "status": status,
+        "message": err
+
+    });
+}
+
 router.post('/changeEmail',
     async(req, res) => {
         try {
