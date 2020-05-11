@@ -72,12 +72,12 @@ router.post('/changeEmail',
             } else {
                 console.log("3");
                 let newData = await services.changeEmail(req, res);
-                if (newData.result) {
+                if (newData) {
                     console.log("4");
                     return res.send({
                         "status": 1,
                         "message": constant.PROFILE_UPDATED,
-                        "data": newData.result
+                        "data": newData
                     });
                 } else {
                     errorLog(res, 0, constant.EMAIL_VALIDATION);
