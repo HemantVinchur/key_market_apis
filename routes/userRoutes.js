@@ -23,12 +23,13 @@ router.post('/signup',
                     my.sendmail(req.body.email_id, constant.REG_SUB, msg);
                     let newData = await services.userSignup(req, res);
                     console.log("5");
+                    console.log(newData);
                     if (newData) {
                         console.log("6");
                         return res.send({
                             "status": 1,
                             "message": constant.USER_REGISTER,
-                            "data": userData[0]
+                            "data": newData.userData[0]
                         });
                     } else {
                         console.log("7");
