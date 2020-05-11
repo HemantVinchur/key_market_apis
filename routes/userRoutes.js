@@ -25,11 +25,11 @@ router.post('/signup',
                     console.log("5");
                     if (newData) {
                         console.log("6");
-                        return res.status(200).json({
-                            statusCode: 200,
-                            message: "Signup successful",
-                            data: newData
-                        })
+                        return res.send({
+                            "status": 1,
+                            "message": constant.USER_REGISTER,
+                            "data": userData[0]
+                        });
                     } else {
                         console.log("7");
                         return res.status(200).json({

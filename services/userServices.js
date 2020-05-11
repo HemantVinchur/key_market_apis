@@ -67,12 +67,8 @@ const userSignup = async(req, res) => {
                                     userData[0].profile_image = base_url + userData[0].profile_image;
                                     userData[0].QR_image = base_url + userData[0].QR_image;
                                 }
+                                return userData[0];
 
-                                res.send({
-                                    "status": 1,
-                                    "message": constant.USER_REGISTER,
-                                    "data": userData[0]
-                                });
                             });
                         });
                         console.log("#9");
@@ -123,11 +119,7 @@ const userSignup = async(req, res) => {
                                 }, function(err, updateresult) {});
                             }
                             console.log("#14");
-                            res.send({
-                                "status": 1,
-                                "message": constant.USER_REGISTER,
-                                "data": userData[0]
-                            });
+                            return userData[0];
                         });
                     }
                 }
@@ -207,12 +199,7 @@ const userSignup = async(req, res) => {
                                 userData[0].QR_image = base_url + userData[0].QR_image;
                                 userData[0].profile_image = base_url + userData[0].profile_image;
                             }
-
-                            res.send({
-                                "status": 1,
-                                "message": constant.USER_REGISTER,
-                                "data": userData[0]
-                            });
+                            return userData[0];
                         });
                     });
                 } else {
@@ -265,12 +252,7 @@ const userSignup = async(req, res) => {
 
                             userData[0].QR_image = base_url + userData[0].QR_image;
                         }
-
-                        res.send({
-                            "status": 1,
-                            "message": constant.USER_REGISTER,
-                            "data": userData[0]
-                        });
+                        return userData[0];
                     });
                 }
             });
@@ -280,7 +262,6 @@ const userSignup = async(req, res) => {
         throw error
     }
 
-    return userData[0];
 }
 console.log("#24");
 module.exports = { userSignup }
