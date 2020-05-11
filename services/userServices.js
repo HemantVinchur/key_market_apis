@@ -280,6 +280,7 @@ const changeEmail = async(req, res) => {
                 errorLog(res, 0, err);
             } else {
                 console.log("#2");
+                console.log(result);
                 if (result.length == 0) {
 
                     cm.update('user', {
