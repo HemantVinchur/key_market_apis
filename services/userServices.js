@@ -279,6 +279,8 @@ const userSignup = async(req, res) => {
         console.error(error)
         throw error
     }
+
+    return userData[0];
 }
 console.log("#24");
 module.exports = { userSignup }
