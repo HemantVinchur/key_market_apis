@@ -67,6 +67,7 @@ const userSignup = async(req, res) => {
                                     userData[0].profile_image = base_url + userData[0].profile_image;
                                     userData[0].QR_image = base_url + userData[0].QR_image;
                                 }
+                                console.log(userData[0]);
                                 return userData[0];
 
                             });
@@ -119,6 +120,7 @@ const userSignup = async(req, res) => {
                                 }, function(err, updateresult) {});
                             }
                             console.log("#14");
+                            console.log(userData[0]);
                             return userData[0];
                         });
                     }
@@ -199,6 +201,7 @@ const userSignup = async(req, res) => {
                                 userData[0].QR_image = base_url + userData[0].QR_image;
                                 userData[0].profile_image = base_url + userData[0].profile_image;
                             }
+                            console.log(userData[0]);
                             return userData[0];
                         });
                     });
@@ -252,6 +255,7 @@ const userSignup = async(req, res) => {
 
                             userData[0].QR_image = base_url + userData[0].QR_image;
                         }
+                        console.log(userData[0]);
                         return userData[0];
                     });
                 }
