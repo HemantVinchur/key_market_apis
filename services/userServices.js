@@ -267,5 +267,51 @@ const userSignup = async(req, res) => {
     }
 
 }
+
+const changeEmail = async(req, res) => {
+    try {
+        var user_id = req.body.pub_id;
+        cm.getallDataWhere('user', {
+            email_id: req.body.email_id,
+        }, function(err, result) {
+            if (err) {
+                console.log(err);
+                errorLog(res, 0, err);
+            } else {
+                if (result.length == 0) {
+
+                    cm.update('user', {
+                        pub_id: user_id
+                    }, req.body, function(err, result) {
+                        if (err) {
+                            errorLog(res, 0, err);
+
+                        } else {
+                            cm.getallDataWhere('user', {
+                                pub_id: user_id
+                            }, function(err, result) {
+                                if (err) {
+                                    errorLog(res, 0, err);
+
+                                } else {
+                                    result[0].profile_image = base_url + result[0].profile_image;
+                                    result[0].QR_image = base_url + result[0].QR_image;
+                                    return result[0];
+                                }
+                            });
+                        }
+                    })
+
+                } else {
+                    return constant.EMAIL_VALIDATION;
+                }
+            }
+        });
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+
+}
 console.log("#24");
-module.exports = { userSignup }
+module.exports = { userSignup, changeEmail }

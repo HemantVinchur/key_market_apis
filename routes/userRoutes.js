@@ -57,4 +57,37 @@ router.post('/signup',
         }
     })
 
+router.post('/changeEmail',
+    async(req, res) => {
+        try {
+
+            if (!req.body.pub_id || !req.body.email_id) {
+                res.json({
+                    status: 0,
+                    message: constant.CHKAllFIELD
+                });
+                return;
+            } else {
+
+                let newData = await services.changeEmail(req, res);
+                if (newData.result[0]) {
+                    console.log("6");
+                    return res.send({
+                        "status": 1,
+                        "message": constant.PROFILE_UPDATED,
+                        "data": newData.result[0]
+                    });
+                } else {
+                    errorLog(res, 0, constant.EMAIL_VALIDATION);
+                }
+            }
+        } catch (error) {
+            console.log(error)
+            res.status(200).json({
+                statusCode: 500,
+                message: "Email does not changed",
+                data: {}
+            })
+        }
+    })
 module.exports = router;
