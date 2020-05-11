@@ -61,17 +61,19 @@ router.post('/changeEmail',
     async(req, res) => {
         try {
 
+            console.log("1");
             if (!req.body.pub_id || !req.body.email_id) {
+                console.log("2");
                 res.json({
                     status: 0,
                     message: constant.CHKAllFIELD
                 });
                 return;
             } else {
-
+                console.log("3");
                 let newData = await services.changeEmail(req, res);
                 if (newData.result[0]) {
-                    console.log("6");
+                    console.log("4");
                     return res.send({
                         "status": 1,
                         "message": constant.PROFILE_UPDATED,

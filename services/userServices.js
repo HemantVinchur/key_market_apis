@@ -270,6 +270,7 @@ const userSignup = async(req, res) => {
 
 const changeEmail = async(req, res) => {
     try {
+        console.log("#1");
         var user_id = req.body.pub_id;
         cm.getallDataWhere('user', {
             email_id: req.body.email_id,
@@ -278,6 +279,7 @@ const changeEmail = async(req, res) => {
                 console.log(err);
                 errorLog(res, 0, err);
             } else {
+                console.log("#2");
                 if (result.length == 0) {
 
                     cm.update('user', {
@@ -287,6 +289,7 @@ const changeEmail = async(req, res) => {
                             errorLog(res, 0, err);
 
                         } else {
+                            console.log("#3");
                             cm.getallDataWhere('user', {
                                 pub_id: user_id
                             }, function(err, result) {
@@ -294,6 +297,7 @@ const changeEmail = async(req, res) => {
                                     errorLog(res, 0, err);
 
                                 } else {
+                                    console.log("#4");
                                     result[0].profile_image = base_url + result[0].profile_image;
                                     result[0].QR_image = base_url + result[0].QR_image;
                                     return result[0];
@@ -303,6 +307,7 @@ const changeEmail = async(req, res) => {
                     })
 
                 } else {
+                    console.log("#5");
                     return constant.EMAIL_VALIDATION;
                 }
             }
