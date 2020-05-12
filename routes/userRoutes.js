@@ -100,4 +100,47 @@ router.post('/changeEmail',
             })
         }
     })
+
+router.post('/sendOtp',
+    async(req, res) => {
+        try {
+            let newData = await services.sendOtp(req, res);
+            if (newData == "success") {
+                console.log("4");
+                return res.send({
+                    "status": 1,
+                    "message": constant.OTP_SEND_SUCCESS,
+                    "data": newData
+                });
+            } else if (newData == "validation") {
+                console.log("4");
+                return res.send({
+                    "status": 1,
+                    "message": constant.EMAIL_VALIDATION,
+                    "data": newData
+                });
+            } else if (newData == "register") {
+                console.log("4");
+                return res.send({
+                    "status": 1,
+                    "message": constant.USER_ALRD_RGST,
+                    "data": newData
+                });
+            } else {
+                res.send({
+                    "status": 0,
+                    "message": constant.EMAIL_VALIDATION
+                });
+                return;
+            }
+        } catch (error) {
+            console.log(error)
+            res.status(200).json({
+                statusCode: 500,
+                message: "OTP does not send",
+                data: {}
+            })
+        }
+    })
+
 module.exports = router;

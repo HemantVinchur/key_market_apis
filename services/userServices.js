@@ -281,7 +281,7 @@ const changeEmail = async(req, res) => {
             } else {
                 console.log("#2");
                 console.log(result);
-                if (result.length == 0) {
+                if (result.length != 0) {
 
                     cm.update('user', {
                         pub_id: user_id
@@ -319,5 +319,69 @@ const changeEmail = async(req, res) => {
     }
 
 }
+
+const sendOtp = async(req, res) => {
+    try {
+        if (req.body.email_id) {
+            cm.getallDataWhere('user', {
+                email_id: req.body.email_id,
+            }, function(err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if (result.length == 0) {
+                        var msg = constant.SEND_OTP_TEXT + req.body.otp + ". " + constant.EMAIL_SIGNATURE;
+                        my.sendmail(req.body.email_id, constant.SEND_OTP, msg);
+                        return "success";
+                    } else {
+                        return "validation";
+                    }
+                }
+            });
+        }
+        if (req.body.mobile_number) {
+            cm.getallDataWhere('user', {
+                mobile_number: req.body.mobile_number,
+                country_code: req.body.country_code,
+            }, function(err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if (result.length == 0) {
+                        if (req.body.country_code == "91") {
+                            var senderId = "KEYIND";
+                        } else {
+                            var senderId = "KEYMARKTOTP";
+                        }
+
+                        var msg = "Use " + req.body.otp + constant.VERIFICATION_MSG;
+                        var number = req.body.country_code + req.body.mobile_number;
+                        if (req.body.country_code == "91") {
+                            msg91.send(number, msg, function(err, response) {
+                                //console.log(response);
+                            });
+                        } else {
+                            request({
+                                uri: "http://www.oursms.net/api/sendsms.php?username=keymarket&password=K12345678&message=" + msg + "&numbers=" + number + "&sender=" + senderId + "&unicode=e&Rmduplicated=1&return=json",
+                                method: "GET",
+                                form: 'test'
+                            }, function(error, response, body) {});
+                        }
+
+                        return "success";
+                    } else {
+                        return "register"
+                    }
+                }
+            });
+        }
+
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+
+}
+
 console.log("#24");
-module.exports = { userSignup, changeEmail }
+module.exports = { userSignup, changeEmail, sendOtp }
