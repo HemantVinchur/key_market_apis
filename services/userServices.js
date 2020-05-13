@@ -383,5 +383,100 @@ const sendOtp = async(req, res) => {
 
 }
 
+
+const changeMobileNo = async(req, res) => {
+    try {
+        var user_id = req.body.user_pub_id;
+        cm.getallDataWhere('user', {
+            country_code: req.body.country_code,
+            mobile_number: req.body.mobile_number
+        }, function(err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result.length == 0) {
+                    cm.update('user', {
+                        pub_id: user_id
+                    }, {
+                        country_code: req.body.country_code,
+                        mobile_number: req.body.mobile_number
+                    }, function(err, result) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            cm.getallDataWhere('user', {
+                                pub_id: user_id
+                            }, function(err, result) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    result[0].profile_image = base_url + result[0].profile_image;
+                                    result[0].QR_image = base_url + result[0].QR_image;
+                                    res.send({
+                                        "status": 1,
+                                        "message": constant.PROFILE_UPDATED,
+                                        "data": result[0]
+                                    });
+                                    return result[0];
+                                }
+                            });
+                        }
+                    })
+                } else {
+                    res.send({
+                        "status": 0,
+                        "message": constant.USER_ALRD_RGST
+                    });
+                    return;
+                }
+            }
+        });
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+
+}
+
+
+const guestSignIn = async(req, res) => {
+    try {
+        var pub_id = 'KEYMARKETSUPER';
+        cm.getallDataWhere('user', {
+            pub_id: pub_id
+        }, function(err, userData) {
+            if (userData.length > 0) {
+                userData[0].profile_image = base_url + userData[0].profile_image;
+
+                if (userData[0].QR_image == "") {
+                    var pub_id = userData[0].pub_id;
+                    var code = qr.image(userData[0].pub_id, {
+                        type: 'png',
+                        ec_level: 'H',
+                        size: 10,
+                        margin: 0
+                    });
+                    var ss = path.join('../../../../../var/www/html/admin/assets/barcode_image/', pub_id + '.png');
+                    var output = fs.createWriteStream(ss);
+                    code.pipe(output);
+                    var qr_image = "/assets/barcode_image/" + pub_id + ".png"
+
+                    userData[0].QR_image = base_url + qr_image;
+                    cm.update('user', {
+                        pub_id: pub_id
+                    }, {
+                        QR_image: qr_image,
+                    }, function(err, updateresult) {});
+                }
+            }
+            return userData[0];
+        });
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+
+}
+
 console.log("#24");
-module.exports = { userSignup, changeEmail, sendOtp }
+module.exports = { userSignup, changeEmail, sendOtp, changeMobileNo, guestSignIn }
