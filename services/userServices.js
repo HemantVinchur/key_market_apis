@@ -441,36 +441,45 @@ const changeMobileNo = async(req, res) => {
 
 const guestSignIn = async(req, res) => {
     try {
-        var pub_id = 'KEYMARKETSUPER';
         cm.getallDataWhere('user', {
-            pub_id: pub_id
-        }, function(err, userData) {
-            if (userData.length > 0) {
-                userData[0].profile_image = base_url + userData[0].profile_image;
+            pub_id: req.body.email_id
+        }, function(err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                var pub_id = 'KEYMARKETSUPER';
+                cm.getallDataWhere('user', {
+                    pub_id: pub_id
+                }, function(err, userData) {
+                    if (userData.length > 0) {
+                        userData[0].profile_image = base_url + userData[0].profile_image;
 
-                if (userData[0].QR_image == "") {
-                    var pub_id = userData[0].pub_id;
-                    var code = qr.image(userData[0].pub_id, {
-                        type: 'png',
-                        ec_level: 'H',
-                        size: 10,
-                        margin: 0
-                    });
-                    var ss = path.join('../../../../../var/www/html/admin/assets/barcode_image/', pub_id + '.png');
-                    var output = fs.createWriteStream(ss);
-                    code.pipe(output);
-                    var qr_image = "/assets/barcode_image/" + pub_id + ".png"
+                        if (userData[0].QR_image == "") {
+                            var pub_id = userData[0].pub_id;
+                            var code = qr.image(userData[0].pub_id, {
+                                type: 'png',
+                                ec_level: 'H',
+                                size: 10,
+                                margin: 0
+                            });
+                            var ss = path.join('../../../../../var/www/html/admin/assets/barcode_image/', pub_id + '.png');
+                            var output = fs.createWriteStream(ss);
+                            code.pipe(output);
+                            var qr_image = "/assets/barcode_image/" + pub_id + ".png"
 
-                    userData[0].QR_image = base_url + qr_image;
-                    cm.update('user', {
-                        pub_id: pub_id
-                    }, {
-                        QR_image: qr_image,
-                    }, function(err, updateresult) {});
-                }
+                            userData[0].QR_image = base_url + qr_image;
+                            cm.update('user', {
+                                pub_id: pub_id
+                            }, {
+                                QR_image: qr_image,
+                            }, function(err, updateresult) {});
+                        }
+                    }
+                    return userData[0];
+                });
             }
-            return userData[0];
         });
+
     } catch (error) {
         console.error(error)
         throw error

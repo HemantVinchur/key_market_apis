@@ -177,39 +177,29 @@ router.post('/changeMobileNo',
     })
 
 
-app.get("/guestSignIn", function(req, res) {
+router.post('/guestSignIn',
+    async(req, res) => {
+        try {
 
-            async(req, res) => {
-                try {
-                    cm.getallDataWhere('user', {
-                        pub_id: req.body.email_id
-                    }, function(err, result) {
-                        if (err) {
-                            console.log(err);
-                        } else {
+            let newData = await services.guestSignIn(req, res);
+            if (newData) {
+                console.log("4");
+                return res.send({
+                    "status": 1,
+                    "message": constant.PROFILE_UPDATED,
+                    "data": newData
+                });
+            } else {
+                errorLog(res, 0, constant.USER_ALRD_RGST);
+            }
+        } catch (error) {
+            console.log(error)
+            res.status(200).json({
+                statusCode: 500,
+                message: "Signup unsuccessful",
+                data: {}
+            })
+        }
+    });
 
-                            let newData = await services.guestSignIn(req, res);
-                            if (newData) {
-                                console.log("4");
-                                return res.send({
-                                    "status": 1,
-                                    "message": constant.PROFILE_UPDATED,
-                                    "data": newData
-                                });
-                            } else {
-                                errorLog(res, 0, constant.USER_ALRD_RGST);
-                            }
-
-                        }
-                    });
-                } catch (error) {
-                    console.log(error)
-                    res.status(200).json({
-                        statusCode: 500,
-                        message: "Signup unsuccessful",
-                        data: {}
-                    })
-                }
-            });
-
-        module.exports = router;
+module.exports = router;
