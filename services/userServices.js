@@ -145,7 +145,7 @@ const userSignup = async(req, res) => {
             if (req.body.country_code == "91") {
                 console.log("#21");
                 msg91.send(number, msg, function(err, response) {
-                    //console.log(response);
+                    console.log(msg);
                     return msg;
                 });
             } else {
