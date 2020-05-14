@@ -146,6 +146,7 @@ const userSignup = async(req, res) => {
                 console.log("#21");
                 msg91.send(number, msg, function(err, response) {
                     //console.log(response);
+                    return msg;
                 });
             } else {
                 request({

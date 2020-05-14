@@ -177,7 +177,7 @@ router.post('/changeMobileNo',
     })
 
 
-router.post('/guestSignIn',
+router.get('/guestSignIn',
     async(req, res) => {
         try {
 
