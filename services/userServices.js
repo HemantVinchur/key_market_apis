@@ -277,8 +277,10 @@ const changeEmail = async(req, res) => {
             email_id: req.body.email_id,
         }, function(err, result) {
             if (err) {
+                console.log("..............................................................................");
                 console.log(err);
                 errorLog(res, 0, err);
+                console.log("..............................................................................");
             } else {
                 console.log("#2");
                 console.log(result);
