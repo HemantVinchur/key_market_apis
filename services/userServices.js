@@ -302,6 +302,9 @@ const changeEmail = async(req, res) => {
                                     console.log("#4");
                                     result[0].profile_image = base_url + result[0].profile_image;
                                     result[0].QR_image = base_url + result[0].QR_image;
+                                    console.log("......................................................................................................................");
+                                    console.log(result[0]);
+                                    console.log(".......................................................................................................................");
                                     return result[0];
                                 }
                             });

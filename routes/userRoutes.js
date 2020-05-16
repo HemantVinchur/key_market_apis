@@ -80,6 +80,7 @@ router.post('/changeEmail',
             } else {
                 console.log("3");
                 let newData = await services.changeEmail(req, res);
+                console.log(newData);
                 if (newData) {
                     console.log("4");
                     return res.send({
