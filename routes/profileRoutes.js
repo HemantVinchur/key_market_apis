@@ -1,4 +1,6 @@
-app.post("/viewMyProfile", function(req, res) {
+const router = require('express').Router();
+
+router.post("/viewMyProfile", function(req, res) {
 
     if (!req.body.user_pub_id) {
         res.json({
@@ -229,3 +231,5 @@ app.post("/viewMyProfile", function(req, res) {
         })
     }
 });
+
+module.exports = router;
