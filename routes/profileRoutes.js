@@ -1,5 +1,11 @@
 const router = require('express').Router();
 
+var cm = require("../model/comman_model");
+
+var constant = require('../constant/constant');
+var constantAR = require('../constant/constantAR');
+var constantEN = require('../constant/constant');
+
 router.post("/viewMyProfile", function(req, res) {
 
     if (!req.body.user_pub_id) {
