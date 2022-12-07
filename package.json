@@ -12,7 +12,7 @@
     "dependencies": {
         "aws-sdk": "^2.361.0",
         "axios": "^0.19.2",
-        "body-parser": "^1.14.1",
+        "body-parser": "^1.20.1",
         "cloudinary": "^1.14.0",
         "connect": "^3.7.0",
         "crypto": "^1.0.1",
